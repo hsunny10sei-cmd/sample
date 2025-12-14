@@ -58,30 +58,39 @@
   <img src="myimage.jpg" alt="イラスト">
 
   <div class="statement">
-    <p>
-      供述①
-      <input type="text" class="answer"
-             data-correct="HERO"
-             data-keyword="SOUND">
-      <button class="send">送信</button>
+    <p class="statement-item" data-label="供述①">
+      <span class="label">供述①</span>
+
+      <span class="input-area">
+      	<input type="text" class="answer"
+               data-correct="HERO"
+               data-keyword="私は寿司を食す際のこだわりが常軌を逸脱しているの。だし醤油とわさびを8:2に調合したものに付けて食べないと気が済まないの。ふふっ。">
+      <button class="send">送信</button></span>
+
       <span class="result"></span>
     </p>
 
-    <p>
-      供述②
-      <input type="text" class="answer"
-             data-correct="SISTER"> 
-      <button class="send">送信</button>
+    <p class="statement-item" data-label="供述②">
+      <span class="label">供述②</span>
+
+      <span class="input-area">
+        <input type="text" class="answer"
+               data-correct="SISTER"
+               data-keyword="SILENCE"> 
+      <button class="send">送信</button></span>
+
       <span class="result"></span>
     </p>
 
-    <p>
-      供述③
-      <input type="text" class="answer"
-             data-correct="SOUND"
-             data-keyword="SILENCE">
+    <p class="statement-item" data-label="供述③">
+      <span class="label">供述③</span>
+
+      <span class="input-area">
+        <input type="text" class="answer"
+               data-correct="SOUND"
+               data-keyword="SILENCE">
       <button class="send">送信</button>
-      <span class="result"></span>
+      <span class="result"></span></span>
     </p>
   </div>
 </div>
@@ -96,13 +105,15 @@ const buttons = document.querySelectorAll(".send");
 
 buttons.forEach(btn => {
   btn.addEventListener("click", () => {
-    const p = btn.closest("p");
-    const input = p.querySelector(".answer");
-    const result = p.querySelector(".result");
+    const item = btn.closest(".statement-item");
+    const input = item.querySelector(".answer");
+    const inputArea = item.querySelector(".input-area");
+    const result = item.querySelector(".result");
 
     const user = input.value.trim();
     const correct = input.dataset.correct;
     const keyword = input.dataset.keyword;
+    const label = item.dataset.label;
 
     if (!user) {
       result.textContent = "入力してね";
@@ -111,11 +122,10 @@ buttons.forEach(btn => {
     }
 
     if (user.toUpperCase() === correct) {
-      result.innerHTML = `🔑 キーワード：<strong>${keyword}</strong>`;
-      result.style.color = "green";
+      inputArea.style.display = "none";
 
-      input.disabled = true;
-      btn.disabled = true;
+      result.innerHTML = `<strong>${keyword}</strong>`;
+      result.style.color = "green";
 
       checkAllKeywords();
     } else {
@@ -129,8 +139,6 @@ buttons.forEach(btn => {
 
 </body>
 </html>
-
-
 
 
 
