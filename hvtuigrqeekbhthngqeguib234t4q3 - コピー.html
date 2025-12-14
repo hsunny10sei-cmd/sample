@@ -62,7 +62,7 @@
       供述①
       <input type="text" class="answer"
              data-correct="HERO"
-             data-hint="ヒント：絵本の主人公のローマ字表記だよ">
+             data-keyword="SOUND">
       <button class="send">送信</button>
       <span class="result"></span>
     </p>
@@ -71,7 +71,7 @@
       供述②
       <input type="text" class="answer"
              data-correct="SISTER"
-             data-hint="ヒント：立場を英語で">
+             ｖ 
       <button class="send">送信</button>
       <span class="result"></span>
     </p>
@@ -80,7 +80,7 @@
       供述③
       <input type="text" class="answer"
              data-correct="SOUND"
-             data-hint="ヒント：事件当時の決定的要素">
+             data-keyword="SILENCE">
       <button class="send">送信</button>
       <span class="result"></span>
     </p>
@@ -91,7 +91,6 @@
 </html>
 
 <p id="result"></p>
-<p id="hint"></p>
 
 <script>
 const buttons = document.querySelectorAll(".send");
@@ -104,7 +103,7 @@ buttons.forEach(btn => {
 
     const user = input.value.trim();
     const correct = input.dataset.correct;
-    const hint = input.dataset.hint;
+    const keyword = input.dataset.keyword;
 
     if (!user) {
       result.textContent = "入力してね";
@@ -113,31 +112,25 @@ buttons.forEach(btn => {
     }
 
     if (user.toUpperCase() === correct) {
-      result.textContent = "✔ 正解";
+      result.innerHTML = `🔑 キーワード：<strong>${keyword}</strong>`;
       result.style.color = "green";
+
       input.disabled = true;
       btn.disabled = true;
 
-      checkAllClear();
+      checkAllKeywords();
     } else {
-      result.textContent = "✖ 不正解：" + hint;
+      result.textContent = "✖ 不正解：";
       result.style.color = "red";
     }
   });
 });
-
-function checkAllClear() {
-  const remaining = document.querySelectorAll(".answer:not([disabled])");
-  if (remaining.length === 0) {
-    setTimeout(() => {
-      location.href = "stage2.html";
-    }, 800);
-  }
-}
 </script>
+
 
 </body>
 </html>
+
 
 
 
