@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>謎解き（ステージ1）</title>
+<style>
+  p {
+    margin: 4px 0;
+  }
+
+  body {
+    font-family: Arial, "Yu Gothic", sans-serif;
+    padding: 20px;
+    max-width: 720px;
+    margin: 5px;
+  }
+
+  .suspect-box {
+    display: flex;
+    align-items: center;
+    gap: 16px; /* 画像と入力欄の間隔 */
+    margin-top: 5px;
+  }
+
+  .suspect-box img {
+    max-width: 15%;
+    height: auto;
+  }
+
+  input[type=text] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 200px;
+  }
+
+  button {
+    padding: 8px 12px;
+    font-size: 1rem;
+    margin-left: 8px;
+  }
+
+  #result {
+    margin-top: 12px;
+    font-weight: 600;
+  }
+</style>
+</head>
+<body>
+
+<h1>容疑者の供述</h1>
+<p>【怪しい女】</p>
+
+<div class="suspect-box">
+  <img src="myimage.jpg" alt="イラスト">
+
+  <div class="statement">
+    <p>
+      供述①
+      <input type="text" class="answer"
+             data-correct="HERO"
+             data-hint="ヒント：絵本の主人公のローマ字表記だよ">
+      <button class="send">送信</button>
+      <span class="result"></span>
+    </p>
+
+    <p>
+      供述②
+      <input type="text" class="answer"
+             data-correct="SISTER"
+             data-hint="ヒント：立場を英語で">
+      <button class="send">送信</button>
+      <span class="result"></span>
+    </p>
+
+    <p>
+      供述③
+      <input type="text" class="answer"
+             data-correct="SOUND"
+             data-hint="ヒント：事件当時の決定的要素">
+      <button class="send">送信</button>
+      <span class="result"></span>
+    </p>
+  </div>
+</div>
+
+</body>
+</html>
+
+<p id="result"></p>
+<p id="hint"></p>
+
+<script>
+const buttons = document.querySelectorAll(".send");
+
+buttons.forEach(btn => {
+  btn.addEventListener("click", () => {
+    const p = btn.closest("p");
+    const input = p.querySelector(".answer");
+    const result = p.querySelector(".result");
+
+    const user = input.value.trim();
+    const correct = input.dataset.correct;
+    const hint = input.dataset.hint;
+
+    if (!user) {
+      result.textContent = "入力してね";
+      result.style.color = "black";
+      return;
+    }
+
+    if (user.toUpperCase() === correct) {
+      result.textContent = "✔ 正解";
+      result.style.color = "green";
+      input.disabled = true;
+      btn.disabled = true;
+
+      checkAllClear();
+    } else {
+      result.textContent = "✖ 不正解：" + hint;
+      result.style.color = "red";
+    }
+  });
+});
+
+function checkAllClear() {
+  const remaining = document.querySelectorAll(".answer:not([disabled])");
+  if (remaining.length === 0) {
+    setTimeout(() => {
+      location.href = "stage2.html";
+    }, 800);
+  }
+}
+</script>
+
+</body>
+</html>
