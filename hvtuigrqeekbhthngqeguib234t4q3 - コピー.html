@@ -29,10 +29,13 @@
   }
 
   input[type=text] {
-    padding: 8px;
+    padding: 6px;
     font-size: 1rem;
-    width: 50px;
+    width: 160px;        /* ← 基本サイズ */
+    max-width: 160px;    /* ← スマホの自動拡張を防ぐ */
+    box-sizing: border-box;
   }
+
 
   button {
     padding: 8px 12px;
@@ -135,5 +138,6 @@ function checkAllClear() {
 
 </body>
 </html>
+
 
 
