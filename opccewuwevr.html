@@ -1,6 +1,31 @@
-<video
-  src="op_video.mp4"
-  controls
-  style="width:100%; max-width:300px; height:auto;"
->
-</video>
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+
+<style>
+.video-center {
+  margin: 10px 0;
+  text-align: center;
+}
+
+.video-center video {
+  width: 100%;
+  max-width: 600px;
+  height: auto;
+}
+</style>
+
+</head>
+<body>
+
+<div class="video-center">
+  <video
+    src="op_video.mp4"
+    controls
+    playsinline
+  ></video>
+</div>
+
+</body>
+</html>
