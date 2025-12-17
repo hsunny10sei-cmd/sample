@@ -88,6 +88,13 @@
   border: 1px solid #ccc;
 }
 
+#crime-room {
+  display: inline-block;
+  min-width: 140px;     /* 幅を確保（ダイニング／和室でズレない） */
+  text-align: center;  /* 文字を中央 */
+  margin-left: 0px;   /* ← ここで右に寄せる */
+}
+
 
 </style>
 </head>
@@ -439,11 +446,11 @@
         <option value="無関心な姉">無関心な姉</option>
         <option value="リスニング少女">リスニング少女</option>
       </select>
-</div>
+    </div>
 
   <!-- 犯行タイミング -->
     <div class="final-section">
-      <p><strong>■ 犯行が行われたタイミング</strong></p>
+      <p><strong>■ 犯行タイミング</strong></p>
       <select id="final-timing">
         <option value="">選択してください</option>
         <option value="前半">前半</option>
@@ -451,19 +458,71 @@
       </select>
     </div>
 
-  <!-- 通った部屋 -->
-    <div class="final-section">
-      <p><strong>■ 最低でも犯人が通らざるを得ない部屋</strong></p>
-      <label><input type="checkbox" value="玄関"> 玄関</label><br>
-      <label><input type="checkbox" value="リビング"> リビング</label><br>
-      <label><input type="checkbox" value="和室"> 和室</label><br>
-      <label><input type="checkbox" value="ダイニング"> ダイニング</label><br>
-      <label><input type="checkbox" value="台所"> 台所</label><br>
-      <label><input type="checkbox" value="物置部屋"> 物置部屋</label><br>
-      <label><input type="checkbox" value="トイレ"> トイレ</label><br>
-      <label><input type="checkbox" value="ベランダ"> ベランダ</label><br>
-      <label><input type="checkbox" value="車庫"> 車庫</label>
-    </div>
+  <div class="final-section">
+  <p><strong>■ 犯行ルート</strong><br>
+       ・犯行現場から逆にたどって3か所<br>
+       ・3か所未満の場合は「なし」を選択</p>
+
+  <select class="route-select" id="route1">
+    <option value="">選択してください</option>
+    <option value="">なし</option>
+    <option value="リビング">リビング</option>
+    <option value="和室">和室</option>
+    <option value="ダイニング">ダイニング</option>
+    <option value="物置部屋">物置部屋</option>
+    <option value="台所">台所</option>
+    <option value="洗面・脱衣">洗面・脱衣</option>
+    <option value="トイレ">トイレ</option>
+    <option value="浴室">浴室</option>
+    <option value="階段">階段</option>
+    <option value="玄関">玄関</option>
+    <option value="ベランダ">ベランダ</option>
+    <option value="車庫">車庫</option>
+  </select>
+<br>
+  　　　　↓ <br>
+  <select class="route-select" id="route2">
+    <option value="">選択してください</option>
+    <option value="">なし</option>
+    <option value="リビング">リビング</option>
+    <option value="和室">和室</option>
+    <option value="ダイニング">ダイニング</option>
+    <option value="物置部屋">物置部屋</option>
+    <option value="台所">台所</option>
+    <option value="洗面・脱衣">洗面・脱衣</option>
+    <option value="トイレ">トイレ</option>
+    <option value="浴室">浴室</option>
+    <option value="階段">階段</option>
+    <option value="玄関">玄関</option>
+    <option value="ベランダ">ベランダ</option>
+    <option value="車庫">車庫</option>
+  </select>
+<br>
+  　　　　↓ <br>
+  <select class="route-select" id="route3">
+    <option value="">選択してください</option>
+    <option value="">なし(その場での犯行)</option>
+    <option value="リビング">リビング</option>
+    <option value="和室">和室</option>
+    <option value="ダイニング">ダイニング</option>
+    <option value="物置部屋">物置部屋</option>
+    <option value="台所">台所</option>
+    <option value="洗面・脱衣">洗面・脱衣</option>
+    <option value="トイレ">トイレ</option>
+    <option value="浴室">浴室</option>
+    <option value="階段">階段</option>
+    <option value="玄関">玄関</option>
+    <option value="ベランダ">ベランダ</option>
+    <option value="車庫">車庫</option>
+  </select>
+<br>
+  　　　　↓ <br>
+  <strong id="crime-room">（犯行現場）</strong>
+</div>
+</div>
+
+  <div class="final-right">
+    <img src="map.jpg" alt="間取り図">
 
     <button id="final-check">推理を確定する</button>
 　　
@@ -472,10 +531,6 @@
 　　</button>
 
 　　<p id="final-result"></p>
-  </div>
-
-  <div class="final-right">
-    <img src="map.jpg" alt="間取り図">
   </div>
 </div>
 
@@ -543,29 +598,19 @@ buttons.forEach(btn => {
   });
 });
 
+
 document.getElementById("final-check").addEventListener("click", () => {
   const criminal = document.getElementById("final-criminal").value;
   const timing = document.getElementById("final-timing").value;
 
-  const rooms = Array.from(
-    document.querySelectorAll('input[type="checkbox"]:checked')
-  ).map(cb => cb.value);
+  const route1 = document.getElementById("route1").value;
+  const route2 = document.getElementById("route2").value;
+  const route3 = document.getElementById("route3").value;
+  const crimeRoom = document.getElementById("crime-room").textContent;
 
-  if (!criminal) {
+  if (!criminal || !timing || !route1 || !route2 || !route3 || crimeRoom.includes("犯行")) {
     document.getElementById("final-result").textContent =
-      "犯人を選択してください。";
-    return;
-  }
-
-  if (!timing) {
-    document.getElementById("final-result").textContent =
-      "犯行タイミング（前半／後半）を選択してください。";
-    return;
-  }
-
-  if (rooms.length === 0) {
-    document.getElementById("final-result").textContent =
-      "通った部屋を選択してください。";
+      "すべて選択してください。";
     return;
   }
 
@@ -573,40 +618,49 @@ document.getElementById("final-check").addEventListener("click", () => {
     `あなたの推理：<br>
      犯人：<strong>${criminal}</strong><br>
      犯行タイミング：<strong>${timing}</strong><br>
-     通過した部屋：<strong>${rooms.join(" ・ ")}</strong>`;
+     犯行ルート：<strong>${route1} → ${route2} → ${route3} → ${crimeRoom}</strong>`;
 
-　document.getElementById("final-submit").style.display = "inline-block";
+  document.getElementById("final-submit").style.display = "inline-block";
 });
+
+
+const timingSelect = document.getElementById("final-timing");
+const crimeRoomSpan = document.getElementById("crime-room");
+
+timingSelect.addEventListener("change", () => {
+  if (timingSelect.value === "前半") {
+    crimeRoomSpan.textContent = "ダイニング";
+  } else if (timingSelect.value === "後半") {
+    crimeRoomSpan.textContent = "和室";
+  } else {
+    crimeRoomSpan.textContent = "（犯行現場）";
+  }
+});
+
 
 document.getElementById("final-submit").addEventListener("click", () => {
   const criminal = document.getElementById("final-criminal").value;
   const timing = document.getElementById("final-timing").value;
 
-  const rooms = Array.from(
-    document.querySelectorAll('input[type="checkbox"]:checked')
-  ).map(cb => cb.value);
+  const rooms = [
+    document.getElementById("route1").value,
+    document.getElementById("route2").value,
+    document.getElementById("route3").value,
+    document.getElementById("crime-room").textContent
+  ];
 
-  // 正解データ
   const correctCriminal = "無関心な姉";
   const correctTiming = "後半";
   const correctRooms = ["車庫", "玄関", "物置部屋", "和室"];
 
-  // 部屋判定（順不同・完全一致）
   const roomsMatch =
     rooms.length === correctRooms.length &&
     correctRooms.every(r => rooms.includes(r));
 
-  if (
-    criminal === correctCriminal &&
-    timing === correctTiming &&
-    roomsMatch
-  ) {
-    document.getElementById("final-result").innerHTML =
-      "<strong style='color:green;'>🎉 正解！事件の真相を見抜いた！</strong>";
-  } else {
-    document.getElementById("final-result").innerHTML =
-      "<strong style='color:red;'>❌ 不正解…もう一度供述を見直そう。</strong>";
-  }
+  document.getElementById("final-result").innerHTML =
+    criminal === correctCriminal && timing === correctTiming && roomsMatch
+      ? "<strong style='color:green;'>🎉 正解！事件の真相を見抜いた！</strong>"
+      : "<strong style='color:red;'>❌ 不正解…もう一度供述を見直そう。</strong>";
 });
 
 
