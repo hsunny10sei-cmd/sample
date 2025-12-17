@@ -453,7 +453,7 @@
 
   <!-- 通った部屋 -->
     <div class="final-section">
-      <p><strong>■ 犯人が通った部屋</strong></p>
+      <p><strong>■ 最低でも犯人が通らざるを得ない部屋</strong></p>
       <label><input type="checkbox" value="玄関"> 玄関</label><br>
       <label><input type="checkbox" value="リビング"> リビング</label><br>
       <label><input type="checkbox" value="和室"> 和室</label><br>
@@ -461,18 +461,23 @@
       <label><input type="checkbox" value="台所"> 台所</label><br>
       <label><input type="checkbox" value="物置部屋"> 物置部屋</label><br>
       <label><input type="checkbox" value="トイレ"> トイレ</label><br>
-      <label><input type="checkbox" value="ベランダ"> ベランダ</label>
+      <label><input type="checkbox" value="ベランダ"> ベランダ</label><br>
+      <label><input type="checkbox" value="車庫"> 車庫</label>
     </div>
+
+    <button id="final-check">推理を確定する</button>
+　　
+　　<button id="final-submit" style="display:none;">
+      回答を送信
+　　</button>
+
+　　<p id="final-result"></p>
+  </div>
 
   <div class="final-right">
     <img src="map.jpg" alt="間取り図">
   </div>
 </div>
-<br>
-
-<button id="final-check">推理を確定する</button>
-
-<p id="final-result"></p>
 
 
 <script>
@@ -568,9 +573,41 @@ document.getElementById("final-check").addEventListener("click", () => {
     `あなたの推理：<br>
      犯人：<strong>${criminal}</strong><br>
      犯行タイミング：<strong>${timing}</strong><br>
-     通過した部屋：<strong>${rooms.join(" → ")}</strong>`;
+     通過した部屋：<strong>${rooms.join(" ・ ")}</strong>`;
+
+　document.getElementById("final-submit").style.display = "inline-block";
 });
 
+document.getElementById("final-submit").addEventListener("click", () => {
+  const criminal = document.getElementById("final-criminal").value;
+  const timing = document.getElementById("final-timing").value;
+
+  const rooms = Array.from(
+    document.querySelectorAll('input[type="checkbox"]:checked')
+  ).map(cb => cb.value);
+
+  // 正解データ
+  const correctCriminal = "無関心な姉";
+  const correctTiming = "後半";
+  const correctRooms = ["車庫", "玄関", "物置部屋", "和室"];
+
+  // 部屋判定（順不同・完全一致）
+  const roomsMatch =
+    rooms.length === correctRooms.length &&
+    correctRooms.every(r => rooms.includes(r));
+
+  if (
+    criminal === correctCriminal &&
+    timing === correctTiming &&
+    roomsMatch
+  ) {
+    document.getElementById("final-result").innerHTML =
+      "<strong style='color:green;'>🎉 正解！事件の真相を見抜いた！</strong>";
+  } else {
+    document.getElementById("final-result").innerHTML =
+      "<strong style='color:red;'>❌ 不正解…もう一度供述を見直そう。</strong>";
+  }
+});
 
 
 </script>
@@ -578,7 +615,6 @@ document.getElementById("final-check").addEventListener("click", () => {
 
 </body>
 </html>
-
 
 
 
