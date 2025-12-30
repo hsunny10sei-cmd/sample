@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>パスワード入力</title>
+<title>手がかり3</title>
 
 <style>
   body {
@@ -30,12 +30,20 @@
     font-weight: bold;
   }
 
-  #hint-image {
+  #hint-image1 {
     display: none;
     margin-top: 20px;
     margin: 16px auto;
     max-width: 60%;
   }
+
+ #hint-image2 {
+    display: none;
+    margin-top: 20px;
+    margin: 16px auto;
+    max-width: 60%;
+  }
+
 </style>
 </head>
 
@@ -48,13 +56,15 @@
 
 <div id="message"></div>
 
-<img id="hint-image" src="hint3.jpg" alt="ヒント画像">
+<img id="hint-image1" src="hint3_1.jpg" alt="ヒント画像1">
+<img id="hint-image2" src="hint3_2.jpg" alt="ヒント画像2">
 
 <script>
 function checkPassword() {
   const input = document.getElementById("password").value.trim();
   const message = document.getElementById("message");
-  const image = document.getElementById("hint-image");
+  const image1 = document.getElementById("hint-image1");
+  const image2 = document.getElementById("hint-image2");
 
   if (!input) {
     message.textContent = "パスワードを入力してください";
@@ -62,14 +72,16 @@ function checkPassword() {
     return;
   }
 
-  if (input === "HERO") {
+  if (input === "後半は後半の容疑者") {
     message.textContent = "正解！";
     message.style.color = "green";
-    image.style.display = "block";
+    image1.style.display = "block";
+    image2.style.display = "block";
   } else {
     message.textContent = "パスワードが違います";
     message.style.color = "red";
-    image.style.display = "none";
+    image1.style.display = "none";
+    image2.style.display = "none";
   }
 }
 </script>
