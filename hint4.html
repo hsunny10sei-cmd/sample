@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>パスワード入力</title>
+
+<style>
+  body {
+    font-family: Arial, "Yu Gothic", sans-serif;
+    text-align: center;
+    padding: 40px;
+  }
+
+  input[type="text"] {
+    padding: 8px;
+    font-size: 1rem;
+    width: 140px;
+    text-align: center;
+  }
+
+  button {
+    padding: 8px 14px;
+    font-size: 1rem;
+    margin-left: 8px;
+  }
+
+  #message {
+    margin-top: 12px;
+    font-weight: bold;
+  }
+
+  #hint-image1 {
+    display: none;
+    margin-top: 20px;
+    margin: 16px auto;
+    max-width: 60%;
+  }
+
+  #hint-image2 {
+    display: none;
+    margin-top: 20px;
+    margin: 16px auto;
+    max-width: 60%;
+  }
+</style>
+</head>
+
+<body>
+
+<h2>手がかり4のパスワードを入力してください</h2>
+
+<input type="text" id="password" placeholder="PASSWORD">
+<button onclick="checkPassword()">送信</button>
+
+<div id="message"></div>
+
+<img id="hint-image1" src="hint4_1.jpg" alt="ヒント画像1">
+<img id="hint-image2" src="hint4_2.jpg" alt="ヒント画像2">
+
+<script>
+function checkPassword() {
+  const input = document.getElementById("password").value.trim();
+  const message = document.getElementById("message");
+  const image1 = document.getElementById("hint-image1");
+  const image2 = document.getElementById("hint-image2");
+
+  if (!input) {
+    message.textContent = "パスワードを入力してください";
+    message.style.color = "black";
+    return;
+  }
+
+  if (input === "HERO") {
+    message.textContent = "正解！";
+    message.style.color = "green";
+    image1.style.display = "block";
+    image2.style.display = "block";
+  } else {
+    message.textContent = "パスワードが違います";
+    message.style.color = "red";
+    image1.style.display = "none";
+    image2.style.display = "none";
+  }
+}
+</script>
+
+</body>
+</html>
