@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>パスワード入力</title>
+<title>手がかり2</title>
 
 <style>
   body {
@@ -36,6 +36,7 @@
     margin: 16px auto;
     max-width: 60%;
   }
+
 </style>
 </head>
 
@@ -48,7 +49,7 @@
 
 <div id="message"></div>
 
-<img id="hint-image" src="hint2.jpg" alt="ヒント画像">
+<img id="hint-image" src="hint2_1.jpg" alt="ヒント画像">
 
 <script>
 function checkPassword() {
@@ -62,7 +63,7 @@ function checkPassword() {
     return;
   }
 
-  if (input === "HERO") {
+  if (input === "前半は今日は寿司が") {
     message.textContent = "正解！";
     message.style.color = "green";
     image.style.display = "block";
