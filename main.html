@@ -10,73 +10,71 @@ body {
     font-family: sans-serif;
 }
 
-/* 背景 */
+/* 背景コンテナ */
+.container {
+    position: relative;
+    width: 100%;
+}
+
+/* 背景画像 */
 .background {
     width: 100%;
     display: block;
 }
 
 /* 共通 */
-.section {
+.section, .cards-title, .rule-text {
     position: absolute;
+    transform: translate(-50%, -50%);
+    color: white;
     text-align: center;
 }
 
 /* 画像 */
 .section img {
-    width: 480px;
+    width: 40vw; /* ←画面に応じて変わる */
+    max-width: 480px;
     cursor: pointer;
     transition: 0.3s;
 }
 
-/* ホバー */
 .section img:hover {
     transform: scale(1.05);
 }
 
-/* CARDS文字 */
+/* ===== 位置（割合で指定） ===== */
+
+/* Cards文字 */
 .cards-title {
-    position: absolute;
-    top: 755px;
-    left: 55%;
-    transform: translateX(-50%);
-    font-size: 32px;
-    color: white;
+    top: 75%;   /* ←ここ調整 */
+    left: 57%;
+    font-size: 4vw;
     font-weight: bold;
 }
 
-/* RULE文字 */
+/* cards画像 */
+.cards {
+    top: 85%;
+    left: 30%;
+}
+
+/* main3画像 */
+.rule {
+    top: 81%;
+    left: 70%;
+}
+
+/* Rule文字 */
 .rule-text {
-    position: absolute;
-    top: 900px;   /* ←調整 */
-    left: 54.5%;    /* ←調整 */
-    transform: translateX(-50%);
-    font-size: 32px;
-    color: white;
+    top: 90%;
+    left: 56.5%;
+    font-size: 4vw;
     font-weight: bold;
     text-decoration: none;
 }
 
-/* ホバー */
 .rule-text:hover {
     color: yellow;
-}
-
-/* === 位置調整 === */
-
-/* cards画像 */
-.cards {
-    top: 780px;
-    left: 27%;
-    transform: translateX(-50%);
-}
-
-/* main3画像（クリックあり） */
-.rule {
-    position: absolute;
-    top: 800px;   /* ←ここで位置調整 */
-    left: 70%;    /* ←ここで位置調整 */
-    transform: translateX(-50%);
 }
 
 </style>
@@ -84,28 +82,27 @@ body {
 
 <body>
 
-<!-- 背景 -->
-<img src="main1.jpg" class="background" alt="背景">
+<div class="container">
 
-<!-- CARDS文字 -->
-<div class="cards-title">Cards</div>
+    <img src="main1.jpg" class="background">
 
-<!-- cards -->
-<div class="section cards">
-    <a href="cards.html">
-        <img src="main2.jpg" alt="cards">
-    </a>
+    <div class="cards-title">Cards</div>
+
+    <div class="section cards">
+        <a href="cards.html">
+            <img src="main2.jpg">
+        </a>
+    </div>
+
+    <div class="section rule">
+        <a href="cards.html">
+            <img src="main3.png">
+        </a>
+    </div>
+
+    <a href="rule.html" class="rule-text">Rule</a>
+
 </div>
-
-<!-- main3（クリックでruleへ） -->
-<div class="section rule">
-    <a href="cards.html">
-        <img src="main3.png" alt="rule">
-    </a>
-</div>
-
-<!-- RULE文字 -->
-<a href="rule.html" class="rule-text">Rule</a>
 
 </body>
 </html>
